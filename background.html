@@ -1,0 +1,36 @@
+<!DOCTYPE html> 
+<html>
+<head>
+</head>
+<body>
+</body>
+</html>
+<script type="text/javascript" src="jquery-1.4.2.min.js"></script>
+<script type="text/javascript">
+init();
+
+function init() {
+    if (! localStorage.hasExecuted) {
+        localStorage.hasExecuted = true;
+        chrome.tabs.create({
+            url: "options.html"
+        });
+    }
+    else {
+        getHtml();
+    }
+}
+
+function getHtml() {
+    var url = localStorage.kakakuComUrl;
+    $.get(url, setNotification);
+    setTimeout(getHtml, 12 * 60 * 60 * 1000); // semidiurnal
+}
+
+function setNotification(data) {
+    var $doc = $(data);
+    var title = $doc.find('h2').text();
+    var price = $doc.find('#minPrice > a').text();
+    webkitNotifications.createNotification('icon.ico', title, price).show();
+}
+</script>

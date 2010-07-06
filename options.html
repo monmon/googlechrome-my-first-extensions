@@ -1,0 +1,81 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<title>input kakaku.com</title>
+<style type="text/css">
+body {
+  font-family:helvetica, arial, sans-serif;
+  font-size:80%;
+  margin:10px;
+}
+
+#header {
+  padding-bottom:1.5em;
+  padding-top:1.5em;
+}
+
+#header h1 {
+  font-size: 156%;
+  display:inline;
+}
+
+.section-header {
+  background:#ebeff9;
+  border-top:1px solid #b5c7de;
+  font-size:99%;
+  padding:3px 0 2px 5px;
+  font-weight:bold;
+  margin-bottom:1em;
+  margin-top:4em;
+}
+.section-header.first {
+  margin-top:1em;
+}
+#kakakuComUrl {
+  width:300px;
+  margin-left:2px;
+}
+#footer {
+  margin-top:4em;
+}
+</style>
+</head>
+<body>
+
+<div id="header"><h1>input kakaku.com</h1></div>
+
+<div class="section-header first">Custom Domain</div>
+<p>input kakaku.com url here.</p>
+<p>
+  <input type="text" id="kakakuComUrl">
+    <em>(eg http://kakaku.com/item/K0000084168/)</em>
+</p>
+
+<div id="footer">
+  <button id="saveButton" style="font-weight:bold" onclick="save()">Save</button>
+</div>
+
+</body>
+</html>
+<script type="text/javascript" src="jquery-1.4.2.min.js"></script>
+<script type="text/javascript">
+init();
+
+function init() {
+  load();
+}
+
+function load() {
+  $('#kakakuComUrl').val(localStorage.kakakuComUrl || "");
+}
+
+function save() {
+  localStorage.kakakuComUrl = $('#kakakuComUrl').val();
+  if (! localStorage.kakakuComUrl) {
+      return;
+  }
+
+  localStorage.hasExecuted = true;
+  chrome.extension.getBackgroundPage().init();
+}
+</script>
